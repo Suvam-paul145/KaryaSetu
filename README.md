@@ -1,28 +1,101 @@
-# ToDo+Remind - Smart Task Management App
+# Task Reminder App 📝
 
-A modern, responsive task management application built with React, TypeScript, and Tailwind CSS. Features include task CRUD operations, reminder scheduling, AI chatbot integration, and calendar views.
+A full-stack task management application with Google authentication and smart reminder features.
 
-## Features
+## Contributing 🤝
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on how to submit pull requests, report issues, and contribute to the project.
+
+Before contributing, please read our [Code of Conduct](CODE_OF_CONDUCT.md) to understand our community standards.
+
+
+## 🖼️ Project Preview
+
+<div align="center" style="border: 2px solid #e5e7eb; border-radius: 12px; padding: 12px; background-color: #f9fafb;">
+
+<img src="frontend\images\webpage-view.png" alt="ToDo+Remind Webpage Preview" width="100%" style="border-radius: 10px;"/>
+
+</div>
+
+
+## Features ✨
 
 - ✅ **Task Management**: Create, read, update, and delete tasks
 - ⏰ **Smart Reminders**: Set multiple datetime reminders per task
-- 🤖 **AI Chatbot**: Get task suggestions and management help
+- 🤖 **Agentic AI Chatbot**: Get task suggestions and management help
 - 📅 **Calendar View**: Visualize tasks by date
 - 🔐 **Authentication**: Secure login and registration
 - 🎨 **Dark/Light Mode**: Toggle between themes
 - 📱 **Responsive Design**: Mobile-first, works on all devices
 - ♿ **Accessible**: Keyboard navigable with ARIA labels
 
-## Tech Stack
+## ⚙️ Tech Stack
 
-- **Framework**: React 18 with Vite
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui
-- **Routing**: React Router v6
-- **State Management**: React hooks
-- **Date Handling**: date-fns
-- **Icons**: Lucide React
+***Frontend***  
+-- React 18 + Vite, TypeScript, Tailwind CSS, shadcn/ui, React Router v6, Lucide React  
+
+***Backend***  
+-- Node.js, Express.js, TypeScript, JWT Authentication, Socket.io, OAuth 2.0
+
+***Database***  
+-- MongoDB, Mongoose
+
+***Services***  
+-- dotenv, Vercel(Deployment), Git & GitHub (Version Control)
+
+
+  - **Framework**: React 18 with Vite
+  - **Language**: TypeScript
+  - **Styling**: Tailwind CSS
+  - **UI Components**: shadcn/ui
+  - **Routing**: React Router v6
+  - **State Management**: React hooks
+  - **Date Handling**: date-fns
+  - **Icons**: Lucide React
+
+## 🧭 Upcoming Goals
+
+- **One-Gateway**: A single place to connect and manage all your task automations across different websites.  
+- **AI-Automation**: Use AI to handle routine work like posting updates, sending emails, or scheduling meetings automatically.  
+- **Web Automation Hub**: Automate actions on popular platforms like **LinkedIn, GitHub, YouTube, Instagram**, and more through smart APIs and browser automation.  
+- **Smart Trigger System**: Set custom rules such as *“When I finish a task, post it on LinkedIn”* or *“When I upload a project, share it automatically.”*  
+- **Auto-Sync Scheduler**: Keep your calendar, GitHub commits, and social posts automatically synced with your tasks.  
+- **Cross-App Integration**: Connect your app with tools like **Notion**, **Slack**, **Google Calendar**, **Trello**, or **Zapier** for a full workflow setup.  
+- **AI Personal Assistant**: Chat with an AI that helps you manage your day — from drafting posts to replying to messages or summarizing tasks.  
+- **Workflow Builder (Visual UI)**: A simple drag-and-drop tool to create automation flows without writing any code.  
+- **Multi-Platform Notifications**: Get your reminders on **WhatsApp**, **Telegram**, or **Email** — wherever you prefer.  
+- **Secure Automation Layer**: All connections are protected using encryption and safe login methods like OAuth.  
+- **Predictive Action Engine**: The AI learns your habits and suggests or completes routine tasks for you automatically.  
+- **Insight & Analytics Dashboard**: See how automation saves you time with visual charts and productivity stats.  
+
+## Project Structure 📂
+
+```
+Task-reminder/
+├── frontend/                # React + TypeScript frontend
+│   ├── src/
+│   │   ├── components/     # Reusable UI components
+│   │   │   ├── ui/        # Shadcn UI components
+│   │   │   └── ...        # Custom components
+│   │   ├── hooks/         # Custom React hooks
+│   │   ├── lib/           # Utility functions & API
+│   │   ├── pages/         # Page components
+│   │   └── types/         # TypeScript type definitions
+│   └── public/            # Static assets
+│
+├── backend/                # Express + TypeScript backend
+│   ├── src/
+│   │   ├── config/        # Configuration files
+│   │   │   ├── db.ts     # MongoDB connection
+│   │   │   └── passport.ts# OAuth configuration
+│   │   ├── controllers/   # Route controllers
+│   │   ├── middleware/    # Express middleware
+│   │   ├── models/        # MongoDB models
+│   │   ├── routes/        # API routes
+│   │   └── server.ts      # Express app entry
+│   └── .env               # Environment variables
+```
+
 
 ## Getting Started
 

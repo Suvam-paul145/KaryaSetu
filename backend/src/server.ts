@@ -13,6 +13,11 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+// Test route
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Backend server is working!' });
+});
+
 // Routes
 app.use("/api/auth", authRoutes);
 
