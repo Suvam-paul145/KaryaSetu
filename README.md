@@ -13,7 +13,7 @@ Before contributing, please read our [Code of Conduct](CODE_OF_CONDUCT.md) to un
 
 <div align="center" style="border: 2px solid #e5e7eb; border-radius: 12px; padding: 12px; background-color: #f9fafb;">
 
-<img src="frontend\images\webpage-view.png" alt="ToDo+Remind Webpage Preview" width="100%" style="border-radius: 10px;"/>
+<img src="frontend\public\webpage-view.png" alt="ToDo+Remind Webpage Preview" width="100%" style="border-radius: 10px;"/>
 
 </div>
 
