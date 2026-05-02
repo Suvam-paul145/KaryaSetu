@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import passport from "passport";
 import { connectDB } from "./config/db";
 import authRoutes from "./routes/auth.routes";
 
@@ -9,9 +10,11 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+app.use(cors({ origin: clientUrl, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(passport.initialize());
 
 // Test route
 app.get('/api/test', (req, res) => {

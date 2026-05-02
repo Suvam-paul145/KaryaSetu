@@ -4,6 +4,7 @@ import "../config/passport";
 import jwt from "jsonwebtoken";
 
 const router = Router();
+const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
 
 router.get("/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
@@ -14,7 +15,7 @@ router.get("/google/callback",
   (req: any, res) => {
     const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET!, { expiresIn: "1d" });
     res.cookie("token", token, { httpOnly: true });
-    res.redirect("http://localhost:5173/dashboard");
+    res.redirect(`${clientUrl}/dashboard`);
   }
 );
 
