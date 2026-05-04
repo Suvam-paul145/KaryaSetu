@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +10,20 @@ import { toast } from 'sonner';
 export const Auth = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+
+  // Redirect to dashboard if already authenticated via cookie
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+        const res = await fetch(`${API_BASE_URL}/auth/me`, { credentials: 'include' });
+        if (res.ok) navigate('/dashboard');
+      } catch (err) {
+        // not authenticated
+      }
+    };
+    checkAuth();
+  }, [navigate]);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -103,6 +117,20 @@ export const Auth = () => {
                   >
                     {isLoading ? 'Logging in...' : 'Login'}
                   </Button>
+
+                  <div className="mt-4">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+                        window.location.href = `${API_BASE_URL}/auth/google`;
+                      }}
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-md border py-2 px-3 text-sm font-medium"
+                    >
+                      <img src="/google-logo.png" alt="Google" className="h-5 w-5" />
+                      Sign in with Google
+                    </button>
+                  </div>
                 </CardContent>
               </form>
             </TabsContent>

@@ -2,7 +2,7 @@ import { Task, ChatMessage, UserSettings } from '@/types/task';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
-// Auth token helper
+// Auth token helper (keeps backward-compatible localStorage token support)
 const getAuthHeaders = (): HeadersInit => {
   const token = localStorage.getItem('authToken');
   return {
@@ -16,6 +16,7 @@ export const taskApi = {
   getAll: async (): Promise<Task[]> => {
     const response = await fetch(`${API_BASE_URL}/tasks`, {
       headers: getAuthHeaders(),
+      credentials: 'include',
     });
     if (!response.ok) throw new Error('Failed to fetch tasks');
     return response.json();
@@ -24,6 +25,7 @@ export const taskApi = {
   getById: async (id: string): Promise<Task> => {
     const response = await fetch(`${API_BASE_URL}/tasks/${id}`, {
       headers: getAuthHeaders(),
+      credentials: 'include',
     });
     if (!response.ok) throw new Error('Failed to fetch task');
     return response.json();
@@ -33,6 +35,7 @@ export const taskApi = {
     const response = await fetch(`${API_BASE_URL}/tasks`, {
       method: 'POST',
       headers: getAuthHeaders(),
+      credentials: 'include',
       body: JSON.stringify(task),
     });
     if (!response.ok) throw new Error('Failed to create task');
@@ -43,6 +46,7 @@ export const taskApi = {
     const response = await fetch(`${API_BASE_URL}/tasks/${id}`, {
       method: 'PUT',
       headers: getAuthHeaders(),
+      credentials: 'include',
       body: JSON.stringify(task),
     });
     if (!response.ok) throw new Error('Failed to update task');
@@ -53,6 +57,7 @@ export const taskApi = {
     const response = await fetch(`${API_BASE_URL}/tasks/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
+      credentials: 'include',
     });
     if (!response.ok) throw new Error('Failed to delete task');
   },
@@ -64,6 +69,7 @@ export const chatApi = {
     const response = await fetch(`${API_BASE_URL}/chat`, {
       method: 'POST',
       headers: getAuthHeaders(),
+      credentials: 'include',
       body: JSON.stringify({ message }),
     });
     if (!response.ok) throw new Error('Failed to send message');
@@ -73,6 +79,7 @@ export const chatApi = {
   getHistory: async (): Promise<ChatMessage[]> => {
     const response = await fetch(`${API_BASE_URL}/chat/history`, {
       headers: getAuthHeaders(),
+      credentials: 'include',
     });
     if (!response.ok) throw new Error('Failed to fetch chat history');
     return response.json();
@@ -85,6 +92,7 @@ export const authApi = {
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ email, password }),
     });
     if (!response.ok) throw new Error('Login failed');
@@ -95,14 +103,24 @@ export const authApi = {
     const response = await fetch(`${API_BASE_URL}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ email, password, name }),
     });
     if (!response.ok) throw new Error('Registration failed');
     return response.json();
   },
 
+  // Cookie-based logout (clears httpOnly cookie on server)
   logout: async (): Promise<void> => {
+    await fetch(`${API_BASE_URL}/auth/logout`, { method: 'POST', credentials: 'include' });
     localStorage.removeItem('authToken');
+  },
+
+  // Returns currently authenticated user based on httpOnly token cookie
+  me: async (): Promise<{ user: any } | null> => {
+    const response = await fetch(`${API_BASE_URL}/auth/me`, { credentials: 'include' });
+    if (!response.ok) return null;
+    return response.json();
   },
 };
 
