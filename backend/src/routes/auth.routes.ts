@@ -6,21 +6,26 @@ import User from "../models/user.model";
 
 const router = Router();
 const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+const authUrl = `${clientUrl}/auth`;
 
 router.get(
   "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  // Use session: false to avoid requiring express-session middleware (we use JWT cookies instead)
+  passport.authenticate("google", { scope: ["profile", "email"], session: false })
 );
 
 router.get(
   "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/" }),
+  // session: false avoids passport trying to establish a login session (no express-session used)
+  passport.authenticate("google", { failureRedirect: authUrl, session: false }),
   (req: any, res) => {
     const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET!, { expiresIn: "1d" });
     // Set a httpOnly cookie so the client can use it for subsequent requests
     // Use SameSite 'lax' for development/top-level navigation. Adjust to 'none' and secure:true for production HTTPS.
     res.cookie("token", token, { httpOnly: true, sameSite: 'lax', secure: false, maxAge: 24 * 60 * 60 * 1000 });
-    res.redirect(`${clientUrl}/dashboard`);
+    const redirectTo = `${authUrl}?token=${token}`;
+    console.log(`Redirecting to client after OAuth: ${redirectTo}`);
+    res.redirect(redirectTo);
   }
 );
 

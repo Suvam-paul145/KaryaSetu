@@ -11,6 +11,10 @@ if (!process.env.GOOGLE_CLIENT_ID) {
 const backendUrl = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 5000}`;
 const callbackUrl = process.env.GOOGLE_CALLBACK_URL || `${backendUrl}/api/auth/google/callback`;
 
+// Helpful debug output so you can verify the exact callback URL used by the server
+console.log(`Google OAuth callback URL: ${callbackUrl}`);
+console.log(`Google OAuth client ID: ${process.env.GOOGLE_CLIENT_ID}`);
+
 // Validate that required environment variables are present
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   throw new Error('Missing Google OAuth credentials in environment variables');

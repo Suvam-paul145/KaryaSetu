@@ -13,6 +13,18 @@ export const Auth = () => {
 
   // Redirect to dashboard if already authenticated via cookie
   useEffect(() => {
+    // If the backend included a token in the redirect (dev fallback), store it and navigate
+    const params = new URLSearchParams(window.location.search);
+    const tokenFromUrl = params.get('token');
+    if (tokenFromUrl) {
+      localStorage.setItem('authToken', tokenFromUrl);
+      // remove token from URL
+      const cleanUrl = window.location.pathname + window.location.hash;
+      window.history.replaceState({}, document.title, cleanUrl);
+      navigate('/dashboard');
+      return;
+    }
+
     const checkAuth = async () => {
       try {
         const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
