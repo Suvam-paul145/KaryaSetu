@@ -2,13 +2,24 @@ import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import User from "../models/user.model";
 
+// Load environment variables if not already loaded
+if (!process.env.GOOGLE_CLIENT_ID) {
+  const dotenv = require('dotenv');
+  dotenv.config();
+}
+
 const backendUrl = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 5000}`;
 const callbackUrl = process.env.GOOGLE_CALLBACK_URL || `${backendUrl}/api/auth/google/callback`;
 
+// Validate that required environment variables are present
+if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+  throw new Error('Missing Google OAuth credentials in environment variables');
+}
+
 passport.use(new GoogleStrategy(
   {
-    clientID: process.env.GOOGLE_CLIENT_ID!,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: callbackUrl,
   },
   async (accessToken, refreshToken, profile, done) => {
