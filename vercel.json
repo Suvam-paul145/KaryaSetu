@@ -13,7 +13,7 @@
       "use": "@vercel/static-build",
       "config": {
         "zeroConfig": true,
-        "distDir": "dist"
+        "distDir": "frontend/dist"
       }
     }
   ],
