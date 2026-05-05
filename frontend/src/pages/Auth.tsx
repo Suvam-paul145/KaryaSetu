@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 export const Auth = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const apiBaseUrl = import.meta.env.VITE_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/_/backend/api` : 'http://localhost:5000/api');
 
   // Redirect to dashboard if already authenticated via cookie
   useEffect(() => {
@@ -27,8 +28,7 @@ export const Auth = () => {
 
     const checkAuth = async () => {
       try {
-        const API_BASE_URL = import.meta.env.VITE_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/_/backend/api` : 'http://localhost:5000/api');
-        const res = await fetch(`${API_BASE_URL}/auth/me`, { credentials: 'include' });
+        const res = await fetch(`${apiBaseUrl}/auth/me`, { credentials: 'include' });
         if (res.ok) navigate('/dashboard');
       } catch (err) {
         // not authenticated
@@ -134,8 +134,7 @@ export const Auth = () => {
                     <button
                       type="button"
                       onClick={() => {
-                        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-                        window.location.href = `${API_BASE_URL}/auth/google`;
+                        window.location.href = `${apiBaseUrl}/auth/google`;
                       }}
                       className="w-full inline-flex items-center justify-center gap-2 rounded-md border py-2 px-3 text-sm font-medium"
                     >

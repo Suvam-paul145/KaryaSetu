@@ -1,6 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
-import "../config/passport";
+import { googleOAuthConfigured } from "../config/passport";
 import jwt from "jsonwebtoken";
 import User from "../models/user.model";
 
@@ -10,12 +10,24 @@ const authUrl = `${clientUrl}/auth`;
 
 router.get(
   "/google",
+  (req, res, next) => {
+    if (!googleOAuthConfigured) {
+      return res.status(503).json({ message: "Google OAuth is not configured" });
+    }
+    next();
+  },
   // Use session: false to avoid requiring express-session middleware (we use JWT cookies instead)
   passport.authenticate("google", { scope: ["profile", "email"], session: false })
 );
 
 router.get(
   "/google/callback",
+  (req, res, next) => {
+    if (!googleOAuthConfigured) {
+      return res.redirect(authUrl);
+    }
+    next();
+  },
   // session: false avoids passport trying to establish a login session (no express-session used)
   passport.authenticate("google", { failureRedirect: authUrl, session: false }),
   (req: any, res) => {

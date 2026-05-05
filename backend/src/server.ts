@@ -7,11 +7,14 @@ import { connectDB } from "./config/db";
 import authRoutes from "./routes/auth.routes";
 
 dotenv.config();
-connectDB();
+void connectDB();
 
 const app = express();
-const clientUrl = process.env.CLIENT_URL || "*";
-app.use(cors({ origin: clientUrl, credentials: true }));
+const allowedOrigins = process.env.CLIENT_URL
+  ? process.env.CLIENT_URL.split(",").map((origin) => origin.trim()).filter(Boolean)
+  : true;
+
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(passport.initialize());
