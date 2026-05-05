@@ -40,6 +40,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+DEPLOYMENT_SUMMARY.md
 
 
 karyasetu-2376c-firebase-adminsdk-fbsvc-74fb03d363.json
