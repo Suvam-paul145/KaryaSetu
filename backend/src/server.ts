@@ -19,18 +19,23 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(passport.initialize());
 
+const apiRouter = express.Router();
+
 // Test route
-app.get('/api/test', (req, res) => {
+apiRouter.get('/test', (req, res) => {
   res.json({ message: 'Backend server is working!' });
 });
 
 // Routes
-app.use("/api/auth", authRoutes);
+apiRouter.use("/auth", authRoutes);
 
 // Health check for Vercel
-app.get('/api/health', (req, res) => {
+apiRouter.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
+
+app.use("/api", apiRouter);
+app.use("/_/backend/api", apiRouter);
 
 // Handle 404
 app.use((req, res) => {
