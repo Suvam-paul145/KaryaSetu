@@ -1,6 +1,6 @@
 import { Task, ChatMessage, UserSettings } from '@/types/task';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/_/backend/api` : 'http://localhost:3000/api');
 
 // Auth token helper (keeps backward-compatible localStorage token support)
 const getAuthHeaders = (): HeadersInit => {

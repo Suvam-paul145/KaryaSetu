@@ -10,7 +10,7 @@ dotenv.config();
 connectDB();
 
 const app = express();
-const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+const clientUrl = process.env.CLIENT_URL || "*";
 app.use(cors({ origin: clientUrl, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -23,6 +23,16 @@ app.get('/api/test', (req, res) => {
 
 // Routes
 app.use("/api/auth", authRoutes);
+
+// Health check for Vercel
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
+// Handle 404
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not Found' });
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
