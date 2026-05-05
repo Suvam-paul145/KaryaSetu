@@ -5,8 +5,7 @@
       "src": "backend/package.json",
       "use": "@vercel/node",
       "config": {
-        "zeroConfig": true,
-        "includeFiles": "dist/**"
+        "zeroConfig": true
       }
     },
     {
@@ -25,7 +24,7 @@
       "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"]
     },
     {
-      "src": "/(?!_/backend)(.*)",
+      "src": "(.*)",
       "dest": "/frontend/dist/index.html"
     }
   ]
